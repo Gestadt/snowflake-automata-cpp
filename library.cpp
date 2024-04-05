@@ -28,7 +28,8 @@ SnowFlake* CreateSnowFlake(int maxIterations, double alpha, double beta, double 
     return snowFlake;
 }
 
-bool Iterate(SnowFlake* snowFlake) {
+bool Iterate(SnowFlake* snowFlake) 
+{
     // check if terminate
     if (snowFlake->_iteration > snowFlake->_max_iterations) return false;
     int n = snowFlake->_n;
@@ -58,7 +59,7 @@ bool Iterate(SnowFlake* snowFlake) {
         }
     }
 
-    // Modifying c based on conditions
+    // Compute values based on neighboring cells
     for (int i = 0; i < n; ++i) {
         for (int j = 0; j < n; ++j) {
             if (s[i*n+j] >= 1) {
@@ -78,7 +79,7 @@ bool Iterate(SnowFlake* snowFlake) {
         }
     }
 
-    // Calculating r and nr based on conditions
+    // Differentiate between receptive and non-receptive
     for (int i = 0; i < n; ++i) {
         for (int j = 0; j < n; ++j) {
             if (c[i*n + j]>0) {
@@ -89,7 +90,7 @@ bool Iterate(SnowFlake* snowFlake) {
         }
     }
 
-    // Calculating av based on conditions
+    // Calculate receptive values
     for (int i = 0; i < n; ++i) {
         for (int j = 0; j < n; ++j) {
             if (i % 2 == 0) {
@@ -112,7 +113,7 @@ bool Iterate(SnowFlake* snowFlake) {
         }
     }
 
-    // Assigning s based on r and av
+    // Calculate s by combining receptice and non-receptive
     for (int i = 0; i < n; ++i) {
         for (int j = 0; j < n; ++j) {
             s[i*n+j] = r[i*n+j] + av[i*n+j];
