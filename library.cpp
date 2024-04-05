@@ -31,8 +31,15 @@ SnowFlake* CreateSnowFlake(int maxIterations, double alpha, double beta, double 
 bool Iterate(SnowFlake* snowFlake) {
     // check if terminate
     if (snowFlake->_iteration > snowFlake->_max_iterations) return false;
-    
     int n = snowFlake->_n;
+    for(int i=0; i<n; i++)
+    {
+        if(snowFlake->_s[i*n]>=1) return false;
+        if(snowFlake->_s[i*n+n-1]>=1) return false;
+        if(snowFlake->_s[i]>=1) return false;
+        if(snowFlake->_s[i]>=1) return false;
+    }
+    
     double gamma = snowFlake->_gamma;
     double alpha = snowFlake->_alpha;
     double* r = snowFlake->_r;
