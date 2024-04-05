@@ -2,7 +2,7 @@
 #include <iostream>
 #include <array>
 
-SnowFlake::SnowFlake(int maxIterations, int alpha, int beta, int gamma, int n)
+SnowFlake::SnowFlake(int maxIterations, double alpha, double beta, double gamma, int n)
 {
     _max_iterations = maxIterations;
     _alpha = alpha;
@@ -14,10 +14,10 @@ SnowFlake::SnowFlake(int maxIterations, int alpha, int beta, int gamma, int n)
     _r = new double[n*n];
     _nr = new double[n*n];
     _av = new double[n*n];
-
+    _iteration = 0;
 }
 
-SnowFlake* CreateSnowFlake(int maxIterations, int alpha, int beta, int gamma, int n)
+SnowFlake* CreateSnowFlake(int maxIterations, double alpha, double beta, double gamma, int n)
 {
     const auto snowFlake =  new SnowFlake(maxIterations, alpha, beta, gamma, n);
     for(int i=0; i<n; i++)
@@ -28,7 +28,10 @@ SnowFlake* CreateSnowFlake(int maxIterations, int alpha, int beta, int gamma, in
     return snowFlake;
 }
 
-bool Iterate(const SnowFlake* snowFlake) {
+bool Iterate(SnowFlake* snowFlake) {
+    // check if terminate
+    if (snowFlake->_iteration > snowFlake->_max_iterations) return false;
+    
     int n = snowFlake->_n;
     double gamma = snowFlake->_gamma;
     double alpha = snowFlake->_alpha;
@@ -109,12 +112,10 @@ bool Iterate(const SnowFlake* snowFlake) {
         }
     }
 
-
+    snowFlake->_iteration++;
     return true;
 }
-
 
 double* GetGrid(const SnowFlake* snowFlake) {
     return snowFlake->_s;
 }
-
