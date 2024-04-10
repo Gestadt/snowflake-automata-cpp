@@ -2,6 +2,12 @@
 #include <iostream>
 #include <array>
 
+#ifdef __EMSCRIPTEN__
+#include <emscripten/emscripten.h>
+#else
+#define EMSCRIPTEN_KEEPALIVE
+#endif
+
 SnowFlake::SnowFlake(int maxIterations, double alpha, double beta, double gamma, int n)
 {
     _max_iterations = maxIterations;
@@ -17,7 +23,7 @@ SnowFlake::SnowFlake(int maxIterations, double alpha, double beta, double gamma,
     _iteration = 0;
 }
 
-SnowFlake* CreateSnowFlake(int maxIterations, double alpha, double beta, double gamma, int n)
+EMSCRIPTEN_KEEPALIVE SnowFlake* CreateSnowFlake(int maxIterations, double alpha, double beta, double gamma, int n)
 {
     const auto snowFlake =  new SnowFlake(maxIterations, alpha, beta, gamma, n);
     for(int i=0; i<n; i++)
@@ -28,7 +34,7 @@ SnowFlake* CreateSnowFlake(int maxIterations, double alpha, double beta, double 
     return snowFlake;
 }
 
-bool Iterate(SnowFlake* snowFlake) 
+EMSCRIPTEN_KEEPALIVE bool Iterate(SnowFlake* snowFlake) 
 {
     // check if terminate
     if (snowFlake->_iteration > snowFlake->_max_iterations) return false;
@@ -124,6 +130,11 @@ bool Iterate(SnowFlake* snowFlake)
     return true;
 }
 
-double* GetGrid(const SnowFlake* snowFlake) {
+EMSCRIPTEN_KEEPALIVE double* GetGrid(const SnowFlake* snowFlake) {
     return snowFlake->_s;
+}
+
+EMSCRIPTEN_KEEPALIVE int Test(int t)
+{
+    return t;
 }

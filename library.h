@@ -1,6 +1,7 @@
 #ifndef SNOWFLAKE_AUTOMATA_CPP_LIBRARY_H
 #define SNOWFLAKE_AUTOMATA_CPP_LIBRARY_H
 
+
 class SnowFlake {
 private:
 
@@ -21,9 +22,10 @@ public:
 
 extern "C"
 {
-    __attribute__((visibility("default"))) SnowFlake* CreateSnowFlake(int maxIterations, double alpha, double beta, double gamma, int n);
-    __attribute__((visibility("default"))) bool Iterate(SnowFlake* snowFlake);
-    __attribute__((visibility("default"))) double* GetGrid(const SnowFlake* snowFlake);
+    SnowFlake* CreateSnowFlake(int maxIterations, double alpha, double beta, double gamma, int n);
+    bool Iterate(SnowFlake* snowFlake);
+    double* GetGrid(const SnowFlake* snowFlake);
+    int Test(int t);
 }
 
 #endif //SNOWFLAKE_AUTOMATA_CPP_LIBRARY_H
